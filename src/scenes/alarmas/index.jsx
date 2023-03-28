@@ -15,16 +15,15 @@ import ProgressCircle from "../../components/ProgressCircle";
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Dashboard = () => {
+const Alarmas = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  var nombre = "DASHBOARD";
 
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title={nombre} subtitle="Welcome to your dashboard" />
+        <Header title="Alarmas" subtitle="Welcome to your Alarmas" />
 
         <Box>
           <Button
@@ -165,7 +164,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+            <LineChart isAlarmas={true} />
           </Box>
         </Box>
         <Box
@@ -259,7 +258,7 @@ const Dashboard = () => {
             Sales Quantity
           </Typography>
           <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
+            <BarChart isAlarmas={true} />
           </Box>
         </Box>
         <Box
@@ -289,4 +288,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Alarmas;
