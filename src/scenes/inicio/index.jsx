@@ -24,14 +24,11 @@ const Inicio = () => {
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   function HandleClick(pipo){
-    
     navigate('/estacion',{state:{id:1,name:pipo}});
   }
   
   return (
     <>
-
-    
     <Box m="20px">
       <Header title="Inicio" subtitle="Pipo" />
       <Box
