@@ -15,16 +15,23 @@ import ProgressCircle from "../../components/ProgressCircle";
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import {useLocation} from 'react-router-dom';
+
+import React from "react";
+
+
+
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  var nombre = "DASHBOARD";
+  const location = useLocation();
+
 
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title={nombre} subtitle="Welcome to your dashboard" />
+        <Header title={location.state.name} subtitle="Welcome to your dashboard" />
 
         <Box>
           <Button
