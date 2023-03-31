@@ -10,33 +10,28 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleFormSubmit = (values) => {
-    console.log(values);
-  };
-
-  const handleClick = (userName,password) => {
     fetch('http://localhost:3001/api/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: userName,
-        pass: password
+        user: values.userName,
+        pass: values.password
       })
     })
+    .then((response) => response.json())
     .then(response => {
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
-      }
-      return response.json();
-    })
-    .then(function (response) {
-      if(response.data.hasOwnProperty('accessToken')){
+      if(response.hasOwnProperty('accessToken')){
         navigate('/inicio');
       }
-      console.log(response.data);
-    });
-  }
+      console.log(response);
+    })
+    .catch(err => {
+      console.log("fetch error" + err);
+    })
+  };
+
   return (
     <Box m="20px">
       <Header title="Login" subtitle="Entra a tu perfil" />
