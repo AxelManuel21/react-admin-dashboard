@@ -268,53 +268,66 @@ export const mockDataInvoices = [
 
 export const mockTransactions = [
   {
-    txId: "01e4dsa",
+    txId: "CFE",
     user: "johndoe",
     date: "2021-09-01",
     cost: "43.95",
   },
   {
-    txId: "0315dsaa",
+    txId: "Puerta",
     user: "jackdower",
     date: "2022-04-01",
     cost: "133.45",
   },
   {
-    txId: "01e4dsa",
+    txId: "Bomba",
     user: "aberdohnny",
     date: "2021-09-01",
     cost: "43.95",
   },
   {
-    txId: "51034szv",
+    txId: "Modo",
     user: "goodmanave",
     date: "2022-11-05",
     cost: "200.95",
   },
   {
-    txId: "0a123sb",
+    txId: "Flujo",
     user: "stevebower",
     date: "2022-11-02",
     cost: "13.55",
   },
   {
-    txId: "01e4dsa",
+    txId: "Nivel (LS)",
     user: "aberdohnny",
     date: "2021-09-01",
     cost: "43.95",
   },
   {
-    txId: "120s51a",
+    txId: "Comms",
     user: "wootzifer",
     date: "2019-04-15",
     cost: "24.20",
   },
   {
-    txId: "0315dsaa",
+    txId: "Fala X3",
     user: "jackdower",
     date: "2022-04-01",
     cost: "133.45",
   },
+  {
+    txId: "Falla Calibración",
+    user: "jackdower",
+    date: "2022-04-01",
+    cost: "133.45",
+  },
+  {
+    txId: "Falla Chemgard",
+    user: "jackdower",
+    date: "2022-04-01",
+    cost: "133.45",
+  },
+  
 ];
 
 export const mockBarData = [

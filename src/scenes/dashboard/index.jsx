@@ -2,6 +2,7 @@ import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import FlashOnOutlinedIcon from '@mui/icons-material/FlashOnOutlined';
 import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -11,6 +12,10 @@ import LineChart from "../../components/LineChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import WaterOutlinedIcon from '@mui/icons-material/WaterOutlined';
+import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
+import LeakAddOutlinedIcon from '@mui/icons-material/LeakAddOutlined';
+import ModeStandbyOutlinedIcon from '@mui/icons-material/ModeStandbyOutlined';
 
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -19,12 +24,15 @@ import {useLocation} from 'react-router-dom';
 
 import React from "react";
 
+import Switch from '@mui/material/Switch';
+
 
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const location = useLocation();
+  const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
 
   return (
@@ -58,72 +66,68 @@ const Dashboard = () => {
       >
         {/* ROW 1 */}
         <Box
-          gridColumn="span 3"
+          gridColumn="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
+            title="MODO"
             progress="0.75"
             increase="+14%"
             icon={
-              <EmailIcon
+              <ModeStandbyOutlinedIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
+            title="COMM"
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <LeakAddOutlinedIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            increase="+5%"
+            title="CFE"
+            progress="0.75"
+            increase="+14%"
             icon={
-              <PersonAddIcon
+              <FlashOnOutlinedIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
+            title="BOMBA"
             progress="0.80"
             increase="+43%"
             icon={
@@ -133,6 +137,43 @@ const Dashboard = () => {
             }
           />
         </Box>
+        <Box
+          gridColumn="span 2"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="FLUJO"
+            progress="0.80"
+            increase="+43%"
+            icon={
+              <AirOutlinedIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 2"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="NIVEL"
+            progress="0.80"
+            increase="+43%"
+            icon={
+              <WaterOutlinedIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        
 
         {/* ROW 2 */}
         <Box
@@ -190,7 +231,7 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Sistemas
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (
@@ -210,17 +251,9 @@ const Dashboard = () => {
                 >
                   {transaction.txId}
                 </Typography>
-                <Typography color={colors.grey[100]}>
-                  {transaction.user}
-                </Typography>
               </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
-              <Box
-                backgroundColor={colors.greenAccent[500]}
-                p="5px 10px"
-                borderRadius="4px"
-              >
-                ${transaction.cost}
+              <Box>
+                <Switch {...label} defaultChecked color="secondary"/>
               </Box>
             </Box>
           ))}

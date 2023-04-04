@@ -70,18 +70,24 @@ const Login = () => {
                 error={!!touched.userName && !!errors.userName}
                 helperText={touched.userName && errors.userName}
                 sx={{ gridColumn: "span 2" }}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
               />
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
-                label="Password"
+                type="password"
+                label="Contraseña"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
                 name="password"
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
                 sx={{ gridColumn: "span 2" }}
               />
             </Box>
