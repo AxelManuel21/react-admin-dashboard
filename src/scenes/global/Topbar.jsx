@@ -10,11 +10,26 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import Clock from 'react-live-clock';
 import moment from 'moment';
 import 'moment/locale/es';
+import ProtectedRoutes from "../../ProtectedRoutes";
+import MemoryJWT from "../../inMemoryJwt";
 
 const Topbar = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   moment.locale('es');
+  const myFunc = MemoryJWT;
+
+  function HandleClick(){
+
+    <ProtectedRoutes verified={false}></ProtectedRoutes>
+    myFunc().ereaseToken();
+    // remove JWT from storage
+    //sessionStorage.removeItem('JWT');
+
+    // clear whole storage
+    //sessionStorage.clear();
+
+  }
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
@@ -41,7 +56,7 @@ const Topbar = () => {
         <IconButton>
           <PersonOutlinedIcon />
         </IconButton>
-        <IconButton href="/">
+        <IconButton href="/" eventHandlers = {{click: () => HandleClick()}}>
           <ExitToAppOutlinedIcon />
         </IconButton>
       </Box>

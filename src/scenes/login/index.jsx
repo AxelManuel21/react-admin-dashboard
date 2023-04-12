@@ -4,10 +4,14 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
+import ProtectedRoutes from "../../ProtectedRoutes";
+import MemoryJWT from "../../inMemoryJwt";
 
 const Login = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
+  const myFunc = MemoryJWT;
+
 
   const handleFormSubmit = (values) => {
     fetch('http://localhost:3001/api/auth', {
@@ -23,8 +27,39 @@ const Login = () => {
     .then((response) => response.json())
     .then(response => {
       if(response.hasOwnProperty('accessToken')){
-        navigate('/inicio');
+        //sessionStorage.setItem('JWT', response.accessToken);
+        myFunc().setToken(response.accessToken);
+
+        fetch('http://localhost:3001/api/auth', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            accessToken: myFunc().getToken()
+            //sessionStorage.getItem('JWT')
+          })
+        })
+        .then((response) => response.json())
+        .then(response => {
+
+          if(response.hasOwnProperty('verified')){
+            <ProtectedRoutes verified={response.verified}></ProtectedRoutes>
+            navigate('/inicio');
+          }else{
+            navigate('/');
+          };
+        
+          console.log(response);
+        })
+
+        .catch(err => {
+          console.log("fetch error" + err);
+        })
       }
+      else{
+        navigate('/');
+      };
       console.log(response);
     })
     .catch(err => {
