@@ -1,4 +1,4 @@
-import { useState  } from "react";
+import { useState, useEffect  } from "react";
 import { Routes, Route, useLocation  } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -8,11 +8,12 @@ import Team from "./scenes/team";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Form from "./scenes/form";
-import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Inicio from "./scenes/inicio";
 import Login from "./scenes/login";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
+import Auth from "./auth/auth";
 
 
 
@@ -21,27 +22,82 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const location = useLocation();
 
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const checkUserToken = () => {
+        const userToken = sessionStorage.getItem('JWT');
+        if (!userToken || userToken === 'undefined' || userToken === 'null') {
+          setIsLoggedIn(false);
+        }
+        else{
+          setIsLoggedIn(true);
+        }
+    }
+    useEffect(() => {
+          
+        checkUserToken();
+        
+        //console.log(isLoggedIn);
+    }, [isLoggedIn]);
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {location.pathname !== '/' && <> 
+        {isLoggedIn &&<> 
           <Sidebar isSidebar={isSidebar} /></>}
           <main className="content">
-          {location.pathname !== '/' && <> 
+          {isLoggedIn&& <> 
               <Topbar setIsSidebar={setIsSidebar}></Topbar> </>}
             <Routes>
-            <Route path="/" element={<Login />} />
-            <Route element={<ProtectedRoutes />} >
-              <Route path="/inicio" element={<Inicio />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/invoices" element={<Invoices />} />
-              <Route path="/form" element={<Form />} />
-              <Route path="/alarmas" element={<Alarmas />} />
-              <Route path="/estacion" element={<Dashboard />} />
+            <Route element={<Auth/>} >
+              <Route path="/" element={<Login />} />
             </Route>
+            
+            <Route path="/inicio" element=
+            {<ProtectedRoutes>
+                <Inicio />
+              </ProtectedRoutes>
+            } />
+
+            <Route path="/team" element=
+            {<ProtectedRoutes>
+                <Team />
+              </ProtectedRoutes>
+            } />
+            
+            <Route path="/contacts" element=
+            {<ProtectedRoutes>
+                <Contacts />
+              </ProtectedRoutes>
+            } />
+
+            <Route path="/invoices" element=
+            {<ProtectedRoutes>
+                <Invoices />
+              </ProtectedRoutes>
+            } />
+
+            <Route path="/form" element=
+            {<ProtectedRoutes>
+                <Form />
+              </ProtectedRoutes>
+            } />
+
+            <Route path="/alarmas" element=
+            {<ProtectedRoutes>
+                <Alarmas />
+              </ProtectedRoutes>
+            } />
+
+            <Route path="/estacion" element=
+            {<ProtectedRoutes>
+                <Dashboard />
+              </ProtectedRoutes>
+            } />
+
+              
             </Routes>
           </main>
         </div>

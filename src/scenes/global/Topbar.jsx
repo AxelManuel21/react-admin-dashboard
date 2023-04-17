@@ -10,24 +10,23 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import Clock from 'react-live-clock';
 import moment from 'moment';
 import 'moment/locale/es';
-import ProtectedRoutes from "../../ProtectedRoutes";
+//import ProtectedRoutes from "../../ProtectedRoutes";
 import MemoryJWT from "../../inMemoryJwt";
 
 const Topbar = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   moment.locale('es');
-  const myFunc = MemoryJWT;
+  //const myFunc = MemoryJWT;
 
   function HandleClick(){
 
-    <ProtectedRoutes verified={false}></ProtectedRoutes>
-    myFunc().ereaseToken();
+    //myFunc().ereaseToken();
     // remove JWT from storage
-    //sessionStorage.removeItem('JWT');
+    sessionStorage.removeItem('JWT');
 
     // clear whole storage
-    //sessionStorage.clear();
+    sessionStorage.clear();
 
   }
 

@@ -4,13 +4,44 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import ProtectedRoutes from "../../ProtectedRoutes";
+//import ProtectedRoutes from "../../utils/ProtectedRoutes";
 import MemoryJWT from "../../inMemoryJwt";
 
 const Login = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
-  const myFunc = MemoryJWT;
+  //const myFunc = MemoryJWT;
+  sessionStorage.removeItem('JWT');
+
+  sessionStorage.clear();
+  const pipo = () => {
+    
+    fetch('http://localhost:3001/api/verify', {
+          
+          method: 'GET',
+          headers: {
+            accesstoken: sessionStorage.getItem('JWT')
+          },
+        })
+        
+        .then((response) => response.json())
+        .then(response => {
+
+          if(response.hasOwnProperty('verified')){
+
+            navigate('/inicio');
+            
+          }else{
+            navigate('/');
+          };
+          console.log(response);
+          
+        })
+
+        .catch(err => {
+          console.log("fetch error" + err);
+        })
+  }
 
 
   const handleFormSubmit = (values) => {
@@ -27,35 +58,13 @@ const Login = () => {
     .then((response) => response.json())
     .then(response => {
       if(response.hasOwnProperty('accessToken')){
-        //sessionStorage.setItem('JWT', response.accessToken);
-        myFunc().setToken(response.accessToken);
-
-        fetch('http://localhost:3001/api/auth', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            accessToken: myFunc().getToken()
-            //sessionStorage.getItem('JWT')
-          })
-        })
-        .then((response) => response.json())
-        .then(response => {
-
-          if(response.hasOwnProperty('verified')){
-            <ProtectedRoutes verified={response.verified}></ProtectedRoutes>
-            navigate('/inicio');
-          }else{
-            navigate('/');
-          };
+        // clear whole storage
+        sessionStorage.clear();
+        sessionStorage.setItem('JWT', response.accessToken);
+        //console.log(sessionStorage.getItem('JWT'));
+        //myFunc().setToken(response.accessToken);
+        pipo();
         
-          console.log(response);
-        })
-
-        .catch(err => {
-          console.log("fetch error" + err);
-        })
       }
       else{
         navigate('/');
