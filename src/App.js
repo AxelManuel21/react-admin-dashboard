@@ -37,7 +37,7 @@ function App() {
           
         checkUserToken();
         
-        //console.log(isLoggedIn);
+        console.log(isLoggedIn);
     }, [isLoggedIn]);
 
   return (
@@ -45,10 +45,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-        {isLoggedIn &&<> 
+        {location.pathname !== '/' &&<> 
           <Sidebar isSidebar={isSidebar} /></>}
           <main className="content">
-          {isLoggedIn&& <> 
+          {location.pathname !== '/' && <> 
               <Topbar setIsSidebar={setIsSidebar}></Topbar> </>}
             <Routes>
             <Route element={<Auth/>} >

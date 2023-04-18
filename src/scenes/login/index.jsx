@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
 //import ProtectedRoutes from "../../utils/ProtectedRoutes";
-import MemoryJWT from "../../inMemoryJwt";
+//import MemoryJWT from "../../inMemoryJwt";
 
 const Login = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -45,6 +45,7 @@ const Login = () => {
 
 
   const handleFormSubmit = (values) => {
+    /*
     fetch('http://localhost:3001/api/auth', {
       method: 'POST',
       headers: {
@@ -74,6 +75,8 @@ const Login = () => {
     .catch(err => {
       console.log("fetch error" + err);
     })
+    */
+    navigate('/inicio');
   };
 
   return (

@@ -7,6 +7,7 @@ const ProtectedRoute = (props) => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    /*
     const checkUserToken = () => {
       fetch('http://localhost:3001/api/verify', {
         method: 'GET',
@@ -33,8 +34,10 @@ const ProtectedRoute = (props) => {
     }, 1000);
 
     return () => clearInterval(interval);
+    */
   }, []);
 
+  /*
   if(!isVerified || hasError){
     navigate('/');
     return null; //or Loading component
@@ -44,7 +47,8 @@ const ProtectedRoute = (props) => {
     navigate('/');
     return null;
   }
-
+  */
   return props.children;
+  
 }
 export default ProtectedRoute;

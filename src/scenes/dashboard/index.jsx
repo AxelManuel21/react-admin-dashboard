@@ -11,6 +11,7 @@ import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
+import RadialBar from "../../components/MyResponsiveRadialBar";
 import ProgressCircle from "../../components/ProgressCircle";
 import WaterOutlinedIcon from '@mui/icons-material/WaterOutlined';
 import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
@@ -26,13 +27,42 @@ import React from "react";
 
 import Switch from '@mui/material/Switch';
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
+function createData2(name, stat) {
+  return { name, stat};
+}
+
+function createData(name, MIN, MAX, PROMEDIO) {
+  return { name, MIN, MAX, PROMEDIO};
+}
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const location = useLocation();
   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
+
+  const rows = [
+    createData('LEL', 0, 0, 0),
+    createData('H2S', 0, 0, 0),
+    createData('C0', 0, 0, 0),
+    createData('02', 0, 0, 0),
+  ];
+  const newrows = [
+    createData2('TempExt', 0),
+    createData2('TempInt', 0),
+    createData2('Humedad', 0),
+    createData2('Lluvia MN', 0),
+    createData2('Dirección Viento', "w"),
+    createData2('Velocidad', 0),
+  ];
+
 
 
   return (
@@ -194,14 +224,14 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Niveles
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                O2, H2S, CO Y LEL
               </Typography>
             </Box>
             <Box>
@@ -267,7 +297,7 @@ const Dashboard = () => {
           p="30px"
         >
           <Typography variant="h5" fontWeight="600">
-            Campaign
+            Estación
           </Typography>
           <Box
             display="flex"
@@ -275,15 +305,27 @@ const Dashboard = () => {
             alignItems="center"
             mt="25px"
           >
-            <ProgressCircle size="125" />
-            <Typography
-              variant="h5"
-              color={colors.greenAccent[500]}
-              sx={{ mt: "15px" }}
+            <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {newrows.map((newrows) => (
+            <TableRow
+              key={newrows.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              $48,352 revenue generated
-            </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
+              <TableCell component="th" scope="row">
+                {newrows.name}
+              </TableCell>
+              <TableCell align="right">{newrows.stat}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
           </Box>
         </Box>
         <Box
@@ -296,10 +338,10 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ padding: "30px 30px 0 30px" }}
           >
-            Sales Quantity
+            Niveles
           </Typography>
           <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
+            <RadialBar isDashboard={true} />
           </Box>
         </Box>
         <Box
@@ -313,15 +355,37 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
           >
-            Pipo Mapa
+            Resumen de valores
           </Typography>
           <Box height="200px">
-            <MapContainer center={[20.6925, -103.3199]} zoom={13} scrollWheelZoom={false}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-          </MapContainer>
+
+          <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="right">MIN</TableCell>
+            <TableCell align="right">MAX</TableCell>
+            <TableCell align="right">PROMEDIO</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.MIN}</TableCell>
+              <TableCell align="right">{row.MAX}</TableCell>
+              <TableCell align="right">{row.PROMEDIO}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+
           </Box>
         </Box>
       </Box>
