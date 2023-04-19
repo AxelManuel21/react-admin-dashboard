@@ -16,7 +16,7 @@ const Login = () => {
   sessionStorage.clear();
   const pipo = () => {
     
-    fetch('http://localhost:3001/api/verify', {
+    fetch('http://172.16.52.207:3001/api/verify', {
           
           method: 'GET',
           headers: {
@@ -45,14 +45,14 @@ const Login = () => {
 
 
   const handleFormSubmit = (values) => {
-    /*
-    fetch('http://localhost:3001/api/auth', {
+    
+    fetch('http://172.16.52.207:3001/api/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: values.userName,
+        nombre: values.userName,
         pass: values.password
       })
     })
@@ -75,7 +75,7 @@ const Login = () => {
     .catch(err => {
       console.log("fetch error" + err);
     })
-    */
+    
     navigate('/inicio');
   };
 

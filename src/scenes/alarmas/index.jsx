@@ -16,34 +16,34 @@ const Alarmas = () => {
 
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "id", headerName: "Tipo de alarma", flex: 0.5 },
+    { field: "registrarId", headerName: "Fecha" },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "Estación",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
       field: "age",
-      headerName: "Age",
+      headerName: "Ubicación",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
       field: "phone",
-      headerName: "Phone Number",
+      headerName: "Estado",
       flex: 1,
     },
     {
       field: "email",
-      headerName: "Email",
+      headerName: "Opciones",
       flex: 1,
     },
     {
       field: "address",
-      headerName: "Address",
+      headerName: "Detalles",
       flex: 1,
     },
     {
