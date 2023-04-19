@@ -7,9 +7,9 @@ const ProtectedRoute = (props) => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    /*
+    
     const checkUserToken = () => {
-      fetch('http://localhost:3001/api/verify', {
+      fetch('http://172.16.52.207:3001/api/verify', {
         method: 'GET',
         headers: {
           accesstoken: sessionStorage.getItem('JWT')
@@ -34,10 +34,9 @@ const ProtectedRoute = (props) => {
     }, 1000);
 
     return () => clearInterval(interval);
-    */
   }, []);
 
-  /*
+  
   if(!isVerified || hasError){
     navigate('/');
     return null; //or Loading component
@@ -47,7 +46,7 @@ const ProtectedRoute = (props) => {
     navigate('/');
     return null;
   }
-  */
+
   return props.children;
   
 }
