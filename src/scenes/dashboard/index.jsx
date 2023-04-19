@@ -246,6 +246,8 @@ const Dashboard = () => {
             <LineChart isDashboard={true} />
           </Box>
         </Box>
+
+        
         <Box
           gridColumn="span 4"
           gridRow="span 2"

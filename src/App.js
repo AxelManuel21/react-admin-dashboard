@@ -5,7 +5,6 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Alarmas from "./scenes/alarmas";
 import Team from "./scenes/team";
-import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Form from "./scenes/form";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
@@ -73,12 +72,7 @@ function App() {
               </ProtectedRoutes>
             } />
 
-            <Route path="/invoices" element=
-            {<ProtectedRoutes>
-                <Invoices />
-              </ProtectedRoutes>
-            } />
-
+            
             <Route path="/form" element=
             {<ProtectedRoutes>
                 <Form />
