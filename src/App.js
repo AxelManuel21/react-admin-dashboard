@@ -5,7 +5,6 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Alarmas from "./scenes/alarmas";
 import Team from "./scenes/team";
-import Contacts from "./scenes/contacts";
 import Form from "./scenes/form";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Inicio from "./scenes/inicio";
@@ -44,11 +43,12 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-        {location.pathname !== '/' &&<> 
-          <Sidebar isSidebar={isSidebar} /></>}
+
+
+
           <main className="content">
-          {location.pathname !== '/' && <> 
-              <Topbar setIsSidebar={setIsSidebar}></Topbar> </>}
+
+
             <Routes>
             <Route element={<Auth/>} >
               <Route path="/" element={<Login />} />
@@ -66,11 +66,6 @@ function App() {
               </ProtectedRoutes>
             } />
             
-            <Route path="/contacts" element=
-            {<ProtectedRoutes>
-                <Contacts />
-              </ProtectedRoutes>
-            } />
 
             
             <Route path="/form" element=

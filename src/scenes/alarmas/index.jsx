@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 
 import 'leaflet/dist/leaflet.css';
 
-import { mockDataContacts } from "../../data/mockData";
+import { mockDataAlarms } from "../../data/mockData";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const Alarmas = () => {
@@ -17,28 +17,16 @@ const Alarmas = () => {
 
   const columns = [
     { field: "id", headerName: "Tipo de alarma", flex: 0.5 },
-    { field: "registrarId", headerName: "Fecha" },
+    
     {
       field: "name",
-      headerName: "Estación",
+      headerName: "Fecha",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Ubicación",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Estado",
-      flex: 1,
-    },
-    {
       field: "email",
-      headerName: "Opciones",
+      headerName: "Estación",
       flex: 1,
     },
     {
@@ -233,6 +221,7 @@ const Alarmas = () => {
           backgroundColor={colors.primary[400]}
         >
           
+          
           <Box
         m="40px 0 0 0"
         height="60vh"
@@ -266,7 +255,7 @@ const Alarmas = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={mockDataAlarms}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

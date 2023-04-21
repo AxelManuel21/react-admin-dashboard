@@ -12,15 +12,17 @@ const Login = () => {
   const navigate = useNavigate();
   //const myFunc = MemoryJWT;
   sessionStorage.removeItem('JWT');
-
+  sessionStorage.removeItem('nombre');
   sessionStorage.clear();
+
   const pipo = () => {
     
     fetch('http://172.16.52.207:3001/api/verify', {
           
           method: 'GET',
           headers: {
-            accesstoken: sessionStorage.getItem('JWT')
+            'accessToken': sessionStorage.getItem('JWT')
+
           },
         })
         
@@ -34,7 +36,8 @@ const Login = () => {
           }else{
             navigate('/');
           };
-          console.log(response);
+      //    console.log(response);
+    //console.log("Token: "+sessionStorage.getItem('JWT'));
           
         })
 
@@ -45,7 +48,8 @@ const Login = () => {
 
 
   const handleFormSubmit = (values) => {
-    
+    sessionStorage.setItem('nombre', values.userName);
+    /*
     fetch('http://172.16.52.207:3001/api/auth', {
       method: 'POST',
       headers: {
@@ -73,9 +77,10 @@ const Login = () => {
       console.log(response);
     })
     .catch(err => {
+      navigate('/');
       console.log("fetch error" + err);
     })
-    
+    */
     navigate('/inicio');
   };
 

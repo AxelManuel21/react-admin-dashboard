@@ -199,6 +199,21 @@ export const mockDataContacts = [
   },
 ];
 
+export const mockDataAlarms = [
+  {
+    id: "Alarma 2",
+    name: "10:44:24 AM, 20 de abril de 2023",
+    email: "Sierra Nevada",
+    phone: "(665)121-5454",
+    address: "0912 Won Street, Alabama, SY 10001",
+    city: "New York",
+    zipCode: "10001",
+  }
+];
+
+
+
+
 export const mockDataInvoices = [
   {
     id: 1,

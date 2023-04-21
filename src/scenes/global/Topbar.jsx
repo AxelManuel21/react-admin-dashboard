@@ -11,7 +11,6 @@ import Clock from 'react-live-clock';
 import moment from 'moment';
 import 'moment/locale/es';
 //import ProtectedRoutes from "../../ProtectedRoutes";
-import MemoryJWT from "../../inMemoryJwt";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -24,6 +23,7 @@ const Topbar = () => {
     //myFunc().ereaseToken();
     // remove JWT from storage
     sessionStorage.removeItem('JWT');
+    sessionStorage.removeItem('nombre');
 
     // clear whole storage
     sessionStorage.clear();
