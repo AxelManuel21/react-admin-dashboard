@@ -10,13 +10,69 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const [open, setOpen] = React.useState(false);
+  const [values, setValues] = React.useState(null);
+  const handleOpen = (values) =>
+  {
+    setValues(values)
+    setOpen(true);
+  }; 
+  const handleClose = () => 
+  {
+    setValues(null) 
+    setOpen(false);
+  }
   
 
 
   const handleFormSubmit = (values) => {
-    console.log(values);
+    
+    /*
+    fetch(process.env.REACT_APP_AUTH {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nombre: values.nombre,
+        userName: values.userName,
+        email: values.email,
+        password: values.password,
+        rol: values.rol, 
+        
+      })
+    })
+    .then((response) => response.json())
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.log("fetch error" + err);
+    })
+    */
+   handleOpen(values);
+   console.log(values);
   };
 
   return (
@@ -128,6 +184,25 @@ const Form = () => {
           </form>
         )}
       </Formik>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {values}
+          </Typography>
+        </Box>
+      </Modal>
+
+
+
     </Box>
   );
 };

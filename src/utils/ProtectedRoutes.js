@@ -14,7 +14,7 @@ const ProtectedRoute = (props) => {
     const checkUserToken = () => {
       //setIsLoggedIn(true);
       
-        fetch('http://172.16.52.207:3001/api/verify', {
+        fetch(process.env.REACT_APP_VERIFY, {
           
           method: 'GET',
           headers: {

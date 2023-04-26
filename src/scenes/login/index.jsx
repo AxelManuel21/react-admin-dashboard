@@ -17,7 +17,7 @@ const Login = () => {
 
   const pipo = () => {
     
-    fetch('http://172.16.52.207:3001/api/verify', {
+    fetch(process.env.REACT_APP_VERIFY, {
           
           method: 'GET',
           headers: {
@@ -50,7 +50,7 @@ const Login = () => {
   const handleFormSubmit = (values) => {
     sessionStorage.setItem('nombre', values.userName);
     /*
-    fetch('http://172.16.52.207:3001/api/auth', {
+    fetch(process.env.REACT_APP_AUTH {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
