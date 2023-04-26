@@ -10,11 +10,10 @@ const ProtectedRoute = (props) => {
     //const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-    /*
     const checkUserToken = () => {
       //setIsLoggedIn(true);
       
-        fetch(process.env.REACT_APP_VERIFY, {
+        fetch('https://siapa.ciateq.net.mx/backend/api/verify', {
           
           method: 'GET',
           headers: {
@@ -48,7 +47,7 @@ const ProtectedRoute = (props) => {
         }, 1000);
         return () => clearInterval(interval);
       }, [isLoggedIn]);
-    */
+    
       return (
         <>
       {isLoggedIn ? (

@@ -17,7 +17,7 @@ const Login = () => {
 
   const pipo = () => {
     
-    fetch(process.env.REACT_APP_VERIFY, {
+    fetch('https://siapa.ciateq.net.mx/backend/api/verify', {
           
           method: 'GET',
           headers: {
@@ -49,8 +49,8 @@ const Login = () => {
 
   const handleFormSubmit = (values) => {
     sessionStorage.setItem('nombre', values.userName);
-    /*
-    fetch(process.env.REACT_APP_AUTH {
+    
+    fetch('https://siapa.ciateq.net.mx/backend/api/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ const Login = () => {
       navigate('/');
       console.log("fetch error" + err);
     })
-    */
+    
     navigate('/inicio');
   };
 
