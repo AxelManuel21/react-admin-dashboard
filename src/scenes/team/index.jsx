@@ -14,21 +14,9 @@ const Team = () => {
     { field: "id", headerName: "ID" },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "Nombre",
       flex: 1,
       cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
     },
     {
       field: "email",
@@ -37,7 +25,7 @@ const Team = () => {
     },
     {
       field: "accessLevel",
-      headerName: "Access Level",
+      headerName: "Rol de usuario",
       flex: 1,
       renderCell: ({ row: { access } }) => {
         return (
@@ -100,7 +88,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid  rows={mockDataTeam} columns={columns} />
       </Box>
     </Box>
   );

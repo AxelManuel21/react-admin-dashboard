@@ -1,7 +1,5 @@
 import { useState, useEffect  } from "react";
 import { Routes, Route, useLocation  } from "react-router-dom";
-import Topbar from "./scenes/global/Topbar";
-import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Alarmas from "./scenes/alarmas";
 import Team from "./scenes/team";
@@ -15,11 +13,10 @@ import Auth from "./auth/auth";
 
 
 
+
 function App() {
   const [theme, colorMode] = useMode();
-  const [isSidebar, setIsSidebar] = useState(true);
-  const location = useLocation();
-
+  
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
     const checkUserToken = () => {
@@ -85,6 +82,7 @@ function App() {
                 <Dashboard />
               </ProtectedRoutes>
             } />
+
 
               
             </Routes>

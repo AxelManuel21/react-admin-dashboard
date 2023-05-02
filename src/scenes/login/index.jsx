@@ -7,6 +7,15 @@ import { useNavigate } from 'react-router-dom';
 //import ProtectedRoutes from "../../utils/ProtectedRoutes";
 //import MemoryJWT from "../../inMemoryJwt";
 
+import {useState } from "react";
+
+//Componentes para la visibilidad on/off de la contraseña
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+//
+
 const Login = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
@@ -15,7 +24,14 @@ const Login = () => {
   sessionStorage.removeItem('nombre');
   sessionStorage.clear();
 
-  const pipo = () => {
+  //Controladores de estados de la contraseña
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  //
+
+  //metodo que corrobora si el jwt es valido para brindar acceso a la sesión
+  const checkJWT = () => {
     
     fetch('https://siapa.ciateq.net.mx/backend/api/verify', {
           
@@ -46,10 +62,10 @@ const Login = () => {
         })
   }
 
-
+  //Metodo que recibe los valores del login y corrobora si esta en la bdd para generar un JWT, si este es valido da acceso a la sesión
   const handleFormSubmit = (values) => {
-    sessionStorage.setItem('nombre', values.userName);
-    
+    sessionStorage.setItem('nombre', values.userName); //cuando no sean pruebas hay que quitarlo
+    /*
     fetch('https://siapa.ciateq.net.mx/backend/api/auth', {
       method: 'POST',
       headers: {
@@ -66,9 +82,10 @@ const Login = () => {
         // clear whole storage
         sessionStorage.clear();
         sessionStorage.setItem('JWT', response.accessToken);
+        sessionStorage.setItem('nombre', values.userName);
         //console.log(sessionStorage.getItem('JWT'));
         //myFunc().setToken(response.accessToken);
-        pipo();
+        checkJWT();
         
       }
       else{
@@ -80,7 +97,7 @@ const Login = () => {
       navigate('/');
       console.log("fetch error" + err);
     })
-    
+    */
     navigate('/inicio');
   };
 
@@ -129,7 +146,7 @@ const Login = () => {
               <TextField
                 fullWidth
                 variant="filled"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 label="Contraseña"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -141,6 +158,19 @@ const Login = () => {
                   style: { color: '#fff' },
                 }}
                 sx={{ gridColumn: "span 2" }}
+                InputProps={{ // <-- This is where the toggle button is added.
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">

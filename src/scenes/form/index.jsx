@@ -5,73 +5,83 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 
 import * as React from 'react';
+import {useState } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+//Componentes para el texto del modal
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+//
 
+//Componentes para la visibilidad on/off de la contraseña
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+//
 
-
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+function Modal({ message, onClose }) {
+  return (
+    
+    <Dialog open={true} onClose={onClose}>
+      <DialogContent>
+        <p>{message}</p>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const [open, setOpen] = React.useState(false);
-  const [values, setValues] = React.useState(null);
-  const handleOpen = (values) =>
-  {
-    setValues(values)
-    setOpen(true);
-  }; 
-  const handleClose = () => 
-  {
-    setValues(null) 
-    setOpen(false);
-  }
-  
+  //Controladores de estados del modal
+  const [showModal, setShowModal] = useState(false);
+  const [message, setMessage] = useState('');
+  //
+
+  //Controladores de estados de la contraseña
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  //
 
 
   const handleFormSubmit = (values) => {
     
-    /*
-    fetch(process.env.REACT_APP_AUTH {
+    
+    fetch('https://siapa.ciateq.net.mx/backend/api/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         nombre: values.nombre,
-        userName: values.userName,
-        email: values.email,
+        login: values.userName,
         password: values.password,
-        rol: values.rol, 
+        email: values.email,
+        id_rol: values.rol, 
+        id_estacion: 0,
         
       })
     })
     .then((response) => response.json())
     .then(response => {
       console.log(response);
+      setMessage(JSON.stringify(response.message));
+      setShowModal(true);
     })
     .catch(err => {
       console.log("fetch error" + err);
+      setMessage("Error de comunicación: " + err);
+      setShowModal(true);
     })
-    */
-   handleOpen(values);
+    
+   setMessage("El usuario: "+ JSON.stringify(values.userName) + " se ha creado correctamente.");
+   setShowModal(true);
+   
    console.log(values);
   };
 
@@ -112,7 +122,11 @@ const Form = () => {
                 name="nombre"
                 error={!!touched.nombre && !!errors.nombre}
                 helperText={touched.nombre && errors.nombre}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
                 sx={{ gridColumn: "span 2" }}
+                inputProps={{ maxLength: 64 }}
               />
               <TextField
                 fullWidth
@@ -125,7 +139,11 @@ const Form = () => {
                 name="userName"
                 error={!!touched.userName && !!errors.userName}
                 helperText={touched.userName && errors.userName}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
                 sx={{ gridColumn: "span 2" }}
+                inputProps={{ maxLength: 64 }}
               />
               <TextField
                 fullWidth
@@ -138,12 +156,16 @@ const Form = () => {
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
                 sx={{ gridColumn: "span 2" }}
+                inputProps={{ maxLength: 64 }}
               />
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
+                type={showPassword ? "text" : "password"}
                 label="Contraseña"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -151,13 +173,34 @@ const Form = () => {
                 name="password"
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
                 sx={{ gridColumn: "span 2" }}
+                InputProps={{ // <-- This is where the toggle button is added.
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
 
               
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Rol de usuario</InputLabel>
-                <Select
+              <FormControl fullWidth variant="filled">
+                
+                <InputLabel id="demo-simple-select-label" 
+                sx={{"&.Mui-focused": {
+                color: "white"}}}>Rol de usuario
+                </InputLabel>
+
+                  <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={values.rol}
@@ -166,6 +209,9 @@ const Form = () => {
                   name="rol"  
                   error={!!touched.rol && !!errors.rol}
                   helperText={touched.rol && errors.rol}
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }}
                 >
                   <MenuItem value={1}>Super Administrador</MenuItem>
                   <MenuItem value={2}>Administrador</MenuItem>
@@ -185,21 +231,10 @@ const Form = () => {
         )}
       </Formik>
 
-      <Modal
-        open={open}
-        onClose={handleClose}
+      {showModal && <Modal 
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {values}
-          </Typography>
-        </Box>
-      </Modal>
+        message={message} onClose={() => setShowModal(false)} />}
 
 
 

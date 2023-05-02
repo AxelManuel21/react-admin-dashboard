@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 import Topbar from "../scenes/global/Topbar";
 import Sidebar from "../scenes/global/Sidebar";
@@ -9,10 +9,12 @@ const ProtectedRoute = (props) => {
     const navigate = useNavigate();
     //const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isVerified, setIsVerified] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     const checkUserToken = () => {
-      //setIsLoggedIn(true);
-      
+      setIsLoggedIn(true);
+      /*
         fetch('https://siapa.ciateq.net.mx/backend/api/verify', {
           
           method: 'GET',
@@ -27,7 +29,9 @@ const ProtectedRoute = (props) => {
           if(response.hasOwnProperty('verified')){
             setIsLoggedIn(true);
             
-          }else{
+          }
+          else{
+            setIsVerified(true);
             return navigate('/');
           };
           console.log(response);
@@ -37,7 +41,10 @@ const ProtectedRoute = (props) => {
         .catch(err => {
           navigate('/');
           console.log("fetch error" + err);
+          setHasError(true);
+          setIsVerified(true);
         })
+        */
         
     }
     
@@ -46,9 +53,19 @@ const ProtectedRoute = (props) => {
           checkUserToken();
         }, 1000);
         return () => clearInterval(interval);
-      }, [isLoggedIn]);
-    
-      return (
+      }, []);
+      /*
+      if(!isVerified || hasError){
+        navigate('/');
+        return null; //or Loading component
+      }
+
+      if(!isLoggedIn){
+        navigate('/');
+        return null;
+      }
+      */
+      return (     
         <>
       {isLoggedIn ? (
         <div className="protected">
