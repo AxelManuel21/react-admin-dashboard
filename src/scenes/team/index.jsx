@@ -1,15 +1,43 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
+//import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import React, { useEffect, useState } from "react";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  
+  const [users, setUsers] = useState([]);
+
+  const checkUsers = () => {
+    
+      fetch('https://siapa.ciateq.net.mx/backend/api/users', {
+        
+        method: 'GET',
+        headers: {
+          accesstoken: sessionStorage.getItem('JWT')
+        },
+      })
+      
+      .then((response) => response.json())
+      .then(response => {
+
+        const data = response;
+        setUsers(data);
+        console.log(data);
+        
+      })
+      .catch(err => {
+        console.log("fetch error" + err);
+      })
+      
+      
+  }
 
   function RoleDisplay(rol) {
     let role;
@@ -74,6 +102,11 @@ const Team = () => {
     },
   ];
 
+
+  useEffect(() => {
+    checkUsers();
+  });
+
   return (
     <Box m="20px">
       <Header title="TEAM" subtitle="Managing the Team Members" />
@@ -106,7 +139,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid getRowId={(row) => row.id_usuarios} rows={mockDataTeam} columns={columns} />
+        <DataGrid getRowId={(row) => row.id_usuarios} rows={users} columns={columns} />
       </Box>
     </Box>
   );
