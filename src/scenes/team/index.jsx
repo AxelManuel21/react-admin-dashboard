@@ -10,13 +10,32 @@ import Header from "../../components/Header";
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  function RoleDisplay(rol) {
+    let role;
+    if (rol === 1) {
+        role = 'SuperAdmin';
+    } else if (rol === 2) {
+        role = 'Admin';
+    } else if (rol === 3) {
+        role = 'User';
+    }
+    return <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>{role}</Typography>;
+}
+
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id_usuarios", headerName: "ID" },
     {
-      field: "name",
+      field: "nombre",
       headerName: "Nombre",
       flex: 1,
       cellClassName: "name-column--cell",
+    },
+    {
+      field: "login",
+      headerName: "Nombre de usuario",
+      flex: 1,
     },
     {
       field: "email",
@@ -24,10 +43,10 @@ const Team = () => {
       flex: 1,
     },
     {
-      field: "accessLevel",
+      field: "id_rol",
       headerName: "Rol de usuario",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      renderCell: ({ row: { id_rol } }) => {
         return (
           <Box
             width="60%"
@@ -36,20 +55,19 @@ const Team = () => {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              access === "admin"
+              id_rol === 1
                 ? colors.greenAccent[600]
-                : access === "manager"
+                : id_rol === "manager"
                 ? colors.greenAccent[700]
                 : colors.greenAccent[700]
             }
             borderRadius="4px"
           >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
+            
+            {id_rol === 1 && <AdminPanelSettingsOutlinedIcon />}
+            {id_rol === 2 && <SecurityOutlinedIcon />}
+            {id_rol === 3 && <LockOpenOutlinedIcon />}
+            {RoleDisplay(id_rol)}
           </Box>
         );
       },
@@ -88,7 +106,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid  rows={mockDataTeam} columns={columns} />
+        <DataGrid getRowId={(row) => row.id_usuarios} rows={mockDataTeam} columns={columns} />
       </Box>
     </Box>
   );
