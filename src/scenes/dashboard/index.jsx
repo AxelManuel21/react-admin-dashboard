@@ -3,23 +3,15 @@ import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import FlashOnOutlinedIcon from '@mui/icons-material/FlashOnOutlined';
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
-import LineChart from "../../components/LineChart";
-import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import RadialBar from "../../components/MyResponsiveRadialBar";
-import RealTimeChart from "../../components/RealTimeChart";
-import ProgressCircle from "../../components/ProgressCircle";
 import WaterOutlinedIcon from '@mui/icons-material/WaterOutlined';
 import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
 import LeakAddOutlinedIcon from '@mui/icons-material/LeakAddOutlined';
 import ModeStandbyOutlinedIcon from '@mui/icons-material/ModeStandbyOutlined';
 import { ResponsiveLine } from '@nivo/line';
-import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import {useLocation} from 'react-router-dom';
@@ -31,23 +23,17 @@ import Switch from '@mui/material/Switch';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { mockDataMeteorologica } from "../../data/mockData";
 
-import { Line } from "react-chartjs-2";
-import "chartjs-plugin-streaming";
 
-import moment from "moment";
 
 function createData2(name, stat) {
   return { name, stat};
 }
 
-function createData(name, MIN, MAX, PROMEDIO) {
-  return { name, MIN, MAX, PROMEDIO};
-}
+
 
 
 const Dashboard = () => {
@@ -79,10 +65,13 @@ const Dashboard = () => {
   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
   const rows = [
-    createData('LEL', 1, 2, 3),
-    createData('H2S', 1, 3, 3),
-    createData('C0', 2, 2, 2),
-    createData('02', 3, 5, 4),
+    createData2('LEL', 3),
+    createData2('LEL INT',4),
+    createData2('H2S', 3),
+    createData2('C0', 2),
+    createData2('02', 4),
+    createData2('VOC', 1),
+    createData2('AMMONIA', 5),
   ];
   const newrows = [
     createData2('Presion Atmosferica', datos.presion_atmosferica),
@@ -92,7 +81,7 @@ const Dashboard = () => {
     createData2('Dirección Viento', datos.direccion_viento),
     createData2('Radiacion Solar', datos.radiacion_solar),
   ];
-  const checkUserToken = () => {
+  const checkStation = () => {
     /*
       fetch('https://siapa.ciateq.net.mx/backend/api/verify', {
         
@@ -558,44 +547,38 @@ const Dashboard = () => {
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
-          padding="30px"
+          p="30px"
         >
-          <Typography
-            variant="h5"
-            fontWeight="600"
-            sx={{ marginBottom: "15px" }}
-          >
-            Resumen de valores
+          <Typography variant="h5" fontWeight="600">
+          Gas
           </Typography>
-          <Box height="200px">
-
-          <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            mt="25px"
+          >
+            <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
-            <TableCell align="right">MIN</TableCell>
-            <TableCell align="right">MAX</TableCell>
-            <TableCell align="right">PROMEDIO</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((rows) => (
             <TableRow
-              key={row.name}
+              key={rows.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {rows.name}
               </TableCell>
-              <TableCell align="right">{row.MIN}</TableCell>
-              <TableCell align="right">{row.MAX}</TableCell>
-              <TableCell align="right">{row.PROMEDIO}</TableCell>
+              <TableCell align="right">{rows.stat}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
-
           </Box>
         </Box>
       </Box>

@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
@@ -31,12 +31,12 @@ const Alarmas = () => {
     },
     {
       field: "address",
-      headerName: "Detalles",
+      headerName: "Tipo de alarma",
       flex: 1,
     },
     {
       field: "city",
-      headerName: "City",
+      headerName: "Detalles",
       flex: 1,
     },
     {

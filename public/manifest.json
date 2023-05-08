@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SIAPA | Monitoreo",
+  "name": "Sistema de monitoreo del SIAPA",
   "icons": [
     {
       "src": "favicon.ico",
