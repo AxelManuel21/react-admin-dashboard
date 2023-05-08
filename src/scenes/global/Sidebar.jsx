@@ -11,6 +11,7 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AccessAlarmOutlinedIcon from '@mui/icons-material/AccessAlarmOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -133,6 +134,14 @@ const Sidebar = () => {
               title="Alarmas"
               to="/alarmas"
               icon={<AccessAlarmOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Ajustes"
+              to="/ajustes"
+              icon={<SettingsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

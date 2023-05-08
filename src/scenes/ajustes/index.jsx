@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -22,6 +22,9 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 //
+import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
+import Co2OutlinedIcon from '@mui/icons-material/Co2Outlined';
+import { tokens } from "../../theme";
 
 function Modal({ message, onClose }) {
   return (
@@ -34,7 +37,7 @@ function Modal({ message, onClose }) {
   );
 }
 
-const Form = () => {
+const Ajustes = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   //Controladores de estados del modal
@@ -47,6 +50,8 @@ const Form = () => {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   //
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
 
   const handleFormSubmit = (values) => {
@@ -87,8 +92,7 @@ const Form = () => {
 
   return (
     <Box m="20px">
-      <Header title="CREAR USUARIOS" subtitle="Crear un nuevo perfil de usuario" />
-
+      <Header title="AJUSTES" subtitle="Ajusta los parámetros" />
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -111,6 +115,34 @@ const Form = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
+              <Box
+            mt="25px"
+            p="0 30px"
+            display="flex "
+            justifyContent="flex-start"
+            alignItems="center"
+            
+            sx={{ gridColumn: "span 4" }}
+          >
+        <Box>
+            <Co2OutlinedIcon
+              sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+            />
+        </Box>
+        
+          <Box>
+          <Typography
+            variant="h5"
+            fontWeight="600"
+            color={colors.greenAccent[500]}
+          >
+            Variables Gas
+          </Typography>
+          
+        </Box>
+        
+      </Box>
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -128,6 +160,11 @@ const Form = () => {
                 sx={{ gridColumn: "span 2" }}
                 inputProps={{ maxLength: 64 }}
               />
+
+        
+
+
+              
               <TextField
                 fullWidth
                 variant="filled"
@@ -145,6 +182,36 @@ const Form = () => {
                 sx={{ gridColumn: "span 2" }}
                 inputProps={{ maxLength: 64 }}
               />
+
+      <Box
+            mt="25px"
+            p="0 30px"
+            display="flex "
+            justifyContent="flex-start"
+            alignItems="center"
+            
+            sx={{ gridColumn: "span 4" }}
+          >
+        <Box>
+            <CloudOutlinedIcon
+              sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+            />
+        </Box>
+        
+          <Box>
+          <Typography
+            variant="h5"
+            fontWeight="600"
+            color={colors.greenAccent[500]}
+          >
+            Variables Meteorologicas
+          </Typography>
+          
+        </Box>
+        
+      </Box>
+
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -177,54 +244,16 @@ const Form = () => {
                   style: { color: '#fff' },
                 }}
                 sx={{ gridColumn: "span 2" }}
-                InputProps={{ // <-- This is where the toggle button is added.
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
               />
 
               
-              <FormControl fullWidth variant="filled">
-                
-                <InputLabel id="demo-simple-select-label" 
-                sx={{"&.Mui-focused": {
-                color: "white"}}}>Rol de usuario
-                </InputLabel>
-
-                  <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={values.rol}
-                  label="Rol"
-                  onChange={handleChange}
-                  name="rol"  
-                  error={!!touched.rol && !!errors.rol}
-                  helperText={touched.rol && errors.rol}
-                  InputLabelProps={{
-                    style: { color: '#fff' },
-                  }}
-                >
-                  <MenuItem value={1}>Super Administrador</MenuItem>
-                  <MenuItem value={2}>Administrador</MenuItem>
-                  <MenuItem value={3}>Usuario</MenuItem>
-                </Select>
-              </FormControl>
-
+              
 
 
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Crear Nuevo Usuario
+                Guardar Cambios
               </Button>
             </Box>
           </form>
@@ -249,14 +278,12 @@ const checkoutSchema = yup.object().shape({
   userName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  rol: yup.string().required("required"),
 });
 const initialValues = {
   nombre: "",
   userName: "",
   email: "",
   password: "",
-  rol: "", 
 };
 
-export default Form;
+export default Ajustes;

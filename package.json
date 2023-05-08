@@ -26,6 +26,7 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^3.9.1",
+    "chartjs-plugin-streaming": "^2.0.0",
     "formik": "^2.2.9",
     "leaflet": "^1.9.3",
     "moment": "^2.29.4",
@@ -44,7 +45,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "export WDS_SOCKET_PORT=443 && PORT=3000 react-scripts start",
+    "start": "PORT=3006 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

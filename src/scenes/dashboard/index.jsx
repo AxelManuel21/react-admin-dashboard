@@ -12,18 +12,19 @@ import LineChart from "../../components/LineChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import RadialBar from "../../components/MyResponsiveRadialBar";
+import RealTimeChart from "../../components/RealTimeChart";
 import ProgressCircle from "../../components/ProgressCircle";
 import WaterOutlinedIcon from '@mui/icons-material/WaterOutlined';
 import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
 import LeakAddOutlinedIcon from '@mui/icons-material/LeakAddOutlined';
 import ModeStandbyOutlinedIcon from '@mui/icons-material/ModeStandbyOutlined';
-
+import { ResponsiveLine } from '@nivo/line';
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import {useLocation} from 'react-router-dom';
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Switch from '@mui/material/Switch';
 
@@ -33,6 +34,12 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { mockDataMeteorologica } from "../../data/mockData";
+
+import { Line } from "react-chartjs-2";
+import "chartjs-plugin-streaming";
+
+import moment from "moment";
 
 function createData2(name, stat) {
   return { name, stat};
@@ -42,28 +49,135 @@ function createData(name, MIN, MAX, PROMEDIO) {
   return { name, MIN, MAX, PROMEDIO};
 }
 
+
 const Dashboard = () => {
+
+  const [data, setData] = useState([
+    {
+      id: 'LEL',
+      data: [],
+    },
+    {
+      id: 'CO',
+      data: [],
+    },
+    {
+      id: 'H2S',
+      data: [],
+    },
+    {
+      id: 'O2',
+      data: [],
+    },
+  ]);
+
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const location = useLocation();
+  const [datos, setDatos] = useState([]);
   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
   const rows = [
-    createData('LEL', 0, 0, 0),
-    createData('H2S', 0, 0, 0),
-    createData('C0', 0, 0, 0),
-    createData('02', 0, 0, 0),
+    createData('LEL', 1, 2, 3),
+    createData('H2S', 1, 3, 3),
+    createData('C0', 2, 2, 2),
+    createData('02', 3, 5, 4),
   ];
   const newrows = [
-    createData2('TempExt', 0),
-    createData2('TempInt', 0),
-    createData2('Humedad', 0),
-    createData2('Lluvia MN', 0),
-    createData2('Dirección Viento', "w"),
-    createData2('Velocidad', 0),
+    createData2('Presion Atmosferica', datos.presion_atmosferica),
+    createData2('Velocidad Viento', datos.velocidad_viento),
+    createData2('Humedad Relativa', datos.humedad_relativa),
+    createData2('Precipitacion Pluvial', datos.precipitacion_pluvial),
+    createData2('Dirección Viento', datos.direccion_viento),
+    createData2('Radiacion Solar', datos.radiacion_solar),
   ];
+  const checkUserToken = () => {
+    /*
+      fetch('https://siapa.ciateq.net.mx/backend/api/verify', {
+        
+        method: 'GET',
+        headers: {
+          accesstoken: sessionStorage.getItem('JWT')
+        },
+      })
+      
+      .then((response) => response.json())
+      .then(response => {
 
+        if(response.hasOwnProperty('verified')){
+          setIsLoggedIn(true);
+          
+        }
+        else{
+          setIsVerified(true);
+          return navigate('/');
+        };
+        console.log(response);
+        
+      })
 
+      .catch(err => {
+        navigate('/');
+        console.log("fetch error" + err);
+        setHasError(true);
+        setIsVerified(true);
+      })
+      */
+      
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * mockDataMeteorologica.length); // Genera un índice aleatorio
+      const selectedData = mockDataMeteorologica[randomIndex]; // Obtiene el objeto correspondiente al índice aleatorio
+      setDatos(selectedData);
+      //checkStation();
+      setData((prevState) => [
+        {
+          id: 'LEL',
+          data: [
+            ...prevState[0].data.slice(-9),
+            {
+              x: new Date().toLocaleTimeString(),
+              y: Math.floor(Math.random() * 101),
+            },
+          ],
+        },
+        {
+          id: 'CO',
+          data: [
+            ...prevState[1].data.slice(-9),
+            {
+              x: new Date().toLocaleTimeString(),
+              y: Math.floor(Math.random() * 101),
+            },
+          ],
+        },
+        {
+          id: 'H2S',
+          data: [
+            ...prevState[2].data.slice(-9),
+            {
+              x: new Date().toLocaleTimeString(),
+              y: Math.floor(Math.random() * 101),
+            },
+          ],
+        },
+        {
+          id: 'O2',
+          data: [
+            ...prevState[3].data.slice(-9),
+            {
+              x: new Date().toLocaleTimeString(),
+              y: Math.floor(Math.random() * 101),
+            },
+          ],
+        },
+      ]);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Box m="20px">
@@ -205,6 +319,7 @@ const Dashboard = () => {
         </Box>
         
 
+        
         {/* ROW 2 */}
         <Box
           gridColumn="span 8"
@@ -217,33 +332,126 @@ const Dashboard = () => {
             display="flex "
             justifyContent="space-between"
             alignItems="center"
+          ><Box>
+          <Typography
+            variant="h5"
+            fontWeight="600"
+            color={colors.grey[100]}
           >
-            <Box>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Niveles
-              </Typography>
-              <Typography
-                variant="h3"
-                fontWeight="bold"
-                color={colors.greenAccent[500]}
-              >
-                O2, H2S, CO Y LEL
-              </Typography>
-            </Box>
-            <Box>
-              <IconButton>
-                <DownloadOutlinedIcon
-                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
-                />
-              </IconButton>
-            </Box>
-          </Box>
+            Niveles
+          </Typography>
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            color={colors.greenAccent[500]}
+          >
+            O2, H2S, CO Y LEL
+          </Typography>
+        </Box>
+        <Box>
+          <IconButton>
+            <DownloadOutlinedIcon
+              sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+            />
+          </IconButton>
+        </Box>
+      </Box>
+
           <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+            <ResponsiveLine
+              data={data}
+              margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+              xScale={{ type: 'point' }}
+              yScale={{ type: 'linear', min: 0, max: 100 }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                orient: 'bottom',
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'hora',
+                legendOffset: 36,
+                legendPosition: 'middle',
+              }}
+              axisLeft={{
+                orient: 'left',
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'valor',
+                legendOffset: -40,
+                legendPosition: 'middle',
+              }}
+              colors={{ scheme: 'nivo' }}
+              pointSize={10}
+              theme={{
+                axis: {
+                  domain: {
+                    line: {
+                      stroke: colors.grey[100],
+                    },
+                  },
+                  legend: {
+                    text: {
+                      fill: colors.grey[100],
+                    },
+                  },
+                  ticks: {
+                    line: {
+                      stroke: colors.grey[100],
+                      strokeWidth: 1,
+                    },
+                    text: {
+                      fill: colors.grey[100],
+                    },
+                  },
+                },
+                legends: {
+                  text: {
+                    fill: colors.grey[100],
+                  },
+                },
+                tooltip: {
+                  container: {
+                    color: colors.primary[500],
+                  },
+                },
+              }}
+              legends={[
+                {
+                    anchor: 'bottom-right',
+                    direction: 'column',
+                    justify: false,
+                    translateX: 100,
+                    translateY: 0,
+                    itemsSpacing: 0,
+                    itemDirection: 'left-to-right',
+                    itemWidth: 80,
+                    itemHeight: 20,
+                    itemOpacity: 0.75,
+                    symbolSize: 12,
+                    symbolShape: 'circle',
+                    symbolBorderColor: 'rgba(0, 0, 0, .5)',
+                    effects: [
+                        {
+                            on: 'hover',
+                            style: {
+                                itemBackground: 'rgba(0, 0, 0, .03)',
+                                itemOpacity: 1
+                            }
+                        }
+                    ]
+                }
+            ]}
+              pointBorderWidth={2}
+              pointBorderColor={{ from: 'serieColor' }}
+              pointLabelYOffset={-12}
+              useMesh={true}
+            />
+
+
+            
           </Box>
         </Box>
 
@@ -299,7 +507,7 @@ const Dashboard = () => {
           p="30px"
         >
           <Typography variant="h5" fontWeight="600">
-            Estación
+          Meteorológico
           </Typography>
           <Box
             display="flex"

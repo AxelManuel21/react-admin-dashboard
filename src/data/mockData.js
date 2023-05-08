@@ -1,5 +1,7 @@
 import { tokens } from "../theme";
 
+
+
 export const mockDataTeam = [
   {
     id_usuarios: 1,
@@ -36,6 +38,108 @@ export const mockDataTeam = [
     id_rol: 3,
     email: "sdaaaaaaaaaaaaaaaadasasasasasasasasasd@gmail.com",
     id_estacion: 0,
+  },
+];
+
+export const mockDataGrafica = [
+  {
+    "o2" : 56.2,
+    "eventDatetime" : "23:59:00",
+  },
+  {
+    "o2" : 56.4,
+    "eventDatetime" : "23:59:10",
+  },
+  {
+    "o2" : 56.5,
+    "eventDatetime" : "23:59:20",
+  },
+  {
+    "o2" : 56.3,
+    "eventDatetime" : "23:59:30",
+  },
+];
+
+export const mockDataMeteorologica = [
+  {
+    "presion_atmosferica" : 12.3,
+    "velocidad_viento" : 141.2,
+    "direccion_viento" : 95.1,
+    "precipitacion_pluvial" : 0.55,
+    "humedad_relativa" : 40.4,
+    "radiacion_solar" : 23.6
+  },
+  {
+    "presion_atmosferica" : 12.3,
+    "velocidad_viento" : 142.3,
+    "direccion_viento" : 95.4,
+    "precipitacion_pluvial" : 0.54,
+    "humedad_relativa" : 41.0,
+    "radiacion_solar" : 22.9
+  },
+  {
+    "presion_atmosferica" : 12.6,
+    "velocidad_viento" : 143.6,
+    "direccion_viento" : 95.1,
+    "precipitacion_pluvial" : 0.53,
+    "humedad_relativa" : 40.6,
+    "radiacion_solar" : 23.6
+  },
+  {
+    "presion_atmosferica" : 11.9,
+    "velocidad_viento" : 142.2,
+    "direccion_viento" : 94.3,
+    "precipitacion_pluvial" : 0.54,
+    "humedad_relativa" : 40.3,
+    "radiacion_solar" : 24.0
+  },
+  {
+    "presion_atmosferica" : 12.5,
+    "velocidad_viento" : 141.6,
+    "direccion_viento" : 96.0,
+    "precipitacion_pluvial" : 0.52,
+    "humedad_relativa" : 40.5,
+    "radiacion_solar" : 23.6
+  },
+  {
+    "presion_atmosferica" : 12.5,
+    "velocidad_viento" : 141.4,
+    "direccion_viento" : 96.0,
+    "precipitacion_pluvial" : 0.51,
+    "humedad_relativa" : 40.4,
+    "radiacion_solar" : 23.8
+  },
+  {
+    "presion_atmosferica" : 12.5,
+    "velocidad_viento" : 141.6,
+    "direccion_viento" : 96.1,
+    "precipitacion_pluvial" : 0.51,
+    "humedad_relativa" : 40.3,
+    "radiacion_solar" : 23.8
+  },
+  {
+    "presion_atmosferica" : 12.4,
+    "velocidad_viento" : 141.2,
+    "direccion_viento" : 96.5,
+    "precipitacion_pluvial" : 0.54,
+    "humedad_relativa" : 40.3,
+    "radiacion_solar" : 23.6
+  },
+  {
+    "presion_atmosferica" : 12.4,
+    "velocidad_viento" : 141.4,
+    "direccion_viento" : 96.1,
+    "precipitacion_pluvial" : 0.51,
+    "humedad_relativa" : 41.0,
+    "radiacion_solar" : 23.7
+  },
+  {
+    "presion_atmosferica" : 12.5,
+    "velocidad_viento" : 140.4,
+    "direccion_viento" : 96.4,
+    "precipitacion_pluvial" : 0.52,
+    "humedad_relativa" : 40.3,
+    "radiacion_solar" : 23.8
   },
 ];
 

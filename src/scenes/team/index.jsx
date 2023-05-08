@@ -26,11 +26,9 @@ const Team = () => {
       
       .then((response) => response.json())
       .then(response => {
-
-        const data = response;
+        const data = response.listUsers;
         setUsers(data);
-        console.log(data);
-        
+        console.log(data); 
       })
       .catch(err => {
         console.log("fetch error" + err);
@@ -41,11 +39,11 @@ const Team = () => {
 
   function RoleDisplay(rol) {
     let role;
-    if (rol === 1) {
+    if (rol === '1') {
         role = 'SuperAdmin';
-    } else if (rol === 2) {
+    } else if (rol === '2') {
         role = 'Admin';
-    } else if (rol === 3) {
+    } else if (rol === '3') {
         role = 'User';
     }
     return <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>{role}</Typography>;
@@ -53,7 +51,7 @@ const Team = () => {
 
 
   const columns = [
-    { field: "id_usuarios", headerName: "ID" },
+    { field: "id_usuario", headerName: "ID" },
     {
       field: "nombre",
       headerName: "Nombre",
@@ -83,7 +81,7 @@ const Team = () => {
             display="flex"
             justifyContent="center"
             backgroundColor={
-              id_rol === 1
+              id_rol === '1'
                 ? colors.greenAccent[600]
                 : id_rol === "manager"
                 ? colors.greenAccent[700]
@@ -92,9 +90,9 @@ const Team = () => {
             borderRadius="4px"
           >
             
-            {id_rol === 1 && <AdminPanelSettingsOutlinedIcon />}
-            {id_rol === 2 && <SecurityOutlinedIcon />}
-            {id_rol === 3 && <LockOpenOutlinedIcon />}
+            {id_rol === '1' && <AdminPanelSettingsOutlinedIcon />}
+            {id_rol === '2' && <SecurityOutlinedIcon />}
+            {id_rol === '3' && <LockOpenOutlinedIcon />}
             {RoleDisplay(id_rol)}
           </Box>
         );
@@ -139,7 +137,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid getRowId={(row) => row.id_usuarios} rows={users} columns={columns} />
+        <DataGrid getRowId={(row) => row.id_usuario} rows={users} columns={columns} />
       </Box>
     </Box>
   );

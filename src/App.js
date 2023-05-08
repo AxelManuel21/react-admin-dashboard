@@ -7,6 +7,7 @@ import Form from "./scenes/form";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Inicio from "./scenes/inicio";
 import Login from "./scenes/login";
+import Ajustes from "./scenes/ajustes";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Auth from "./auth/auth";
@@ -80,6 +81,12 @@ function App() {
             <Route path="/estacion" element=
             {<ProtectedRoutes>
                 <Dashboard />
+              </ProtectedRoutes>
+            } />
+
+            <Route path="/ajustes" element=
+            {<ProtectedRoutes>
+                <Ajustes />
               </ProtectedRoutes>
             } />
 
