@@ -65,6 +65,7 @@ const Login = () => {
   //Metodo que recibe los valores del login y corrobora si esta en la bdd para generar un JWT, si este es valido da acceso a la sesión
   const handleFormSubmit = (values) => {
     sessionStorage.setItem('nombre', values.userName); //cuando no sean pruebas hay que quitarlo
+    sessionStorage.setItem('rol', 'SuperAdministrador');
     /*
     fetch('https://siapa.ciateq.net.mx/backend/api/auth', {
       method: 'POST',

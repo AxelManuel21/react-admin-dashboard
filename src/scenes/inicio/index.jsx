@@ -86,7 +86,7 @@ const Inicio = () => {
   return (
     <>
     <Box m="20px">
-      <Header title="Inicio" subtitle="Bienvenido" />
+      <Header title="Estaciones" subtitle="Bienvenido a tus estaciones" />
       <Box
         height="75vh"
         border={`1px solid ${colors.grey[100]}`}

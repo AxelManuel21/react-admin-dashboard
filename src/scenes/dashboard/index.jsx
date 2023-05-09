@@ -172,7 +172,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title={location.state.name} subtitle="Welcome to your dashboard" />
+        <Header title={location.state.name} subtitle="Monitoreo de la estación" />
 
         <Box>
           <Button

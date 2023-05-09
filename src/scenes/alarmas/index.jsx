@@ -50,7 +50,7 @@ const Alarmas = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Alarmas" subtitle="Welcome to your Alarmas" />
+        <Header title="Alarmas" subtitle="Bienvenido a tus alarmas" />
 
         <Box>
           <Button

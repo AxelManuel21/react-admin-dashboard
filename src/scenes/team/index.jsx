@@ -107,7 +107,7 @@ const Team = () => {
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Header title="CRUD DE USUARIOS" subtitle="Maneja a tu equipo de trabajo." />
       <Box
         m="40px 0 0 0"
         height="75vh"
