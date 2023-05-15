@@ -16,6 +16,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 //
 
+import {sha256} from 'crypto-hash';
+
 const Login = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const Login = () => {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   //
+  
 
   //metodo que corrobora si el jwt es valido para brindar acceso a la sesión
   const checkJWT = () => {
@@ -63,10 +66,10 @@ const Login = () => {
   }
 
   //Metodo que recibe los valores del login y corrobora si esta en la bdd para generar un JWT, si este es valido da acceso a la sesión
-  const handleFormSubmit = (values) => {
-    sessionStorage.setItem('nombre', values.userName); //cuando no sean pruebas hay que quitarlo
-    sessionStorage.setItem('rol', 'SuperAdministrador');
-    /*
+  const handleFormSubmit = async (values) => {
+   // sessionStorage.setItem('nombre', values.userName); //cuando no sean pruebas hay que quitarlo
+   const result = await sha256(values.password);
+   console.log(result);
     fetch('https://siapa.ciateq.net.mx/backend/api/auth', {
       method: 'POST',
       headers: {
@@ -74,7 +77,7 @@ const Login = () => {
       },
       body: JSON.stringify({
         nombre: values.userName,
-        pass: values.password
+        pass: result
       })
     })
     .then((response) => response.json())
@@ -84,6 +87,7 @@ const Login = () => {
         sessionStorage.clear();
         sessionStorage.setItem('JWT', response.accessToken);
         sessionStorage.setItem('nombre', values.userName);
+        sessionStorage.setItem('rol', 'SuperAdministrador');
         //console.log(sessionStorage.getItem('JWT'));
         //myFunc().setToken(response.accessToken);
         checkJWT();
@@ -98,7 +102,7 @@ const Login = () => {
       navigate('/');
       console.log("fetch error" + err);
     })
-    */
+    
     navigate('/inicio');
   };
 

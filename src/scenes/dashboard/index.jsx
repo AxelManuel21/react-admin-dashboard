@@ -57,7 +57,7 @@ const Dashboard = () => {
     },
   ]);
 
-
+  const [temp, setTemp] = useState(); 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const location = useLocation();
@@ -65,7 +65,7 @@ const Dashboard = () => {
   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
   const rows = [
-    createData2('LEL', 3),
+    createData2('Temperatura', temp),
     createData2('LEL INT',4),
     createData2('H2S', 3),
     createData2('C0', 2),
@@ -81,9 +81,11 @@ const Dashboard = () => {
     createData2('Dirección Viento', datos.direccion_viento),
     createData2('Radiacion Solar', datos.radiacion_solar),
   ];
-  const checkStation = () => {
-    /*
-      fetch('https://siapa.ciateq.net.mx/backend/api/verify', {
+
+    //es el metodo que permite obtener la lista de usuarios de la base de datos 
+    const checkDatos = () => {
+    
+      fetch('https://siapa.ciateq.net.mx/backend/api/estS1', {
         
         method: 'GET',
         headers: {
@@ -93,35 +95,23 @@ const Dashboard = () => {
       
       .then((response) => response.json())
       .then(response => {
-
-        if(response.hasOwnProperty('verified')){
-          setIsLoggedIn(true);
-          
-        }
-        else{
-          setIsVerified(true);
-          return navigate('/');
-        };
-        console.log(response);
-        
+        const temperatura = response.jsonData;
+        setTemp(temperatura);
+        console.log(temperatura); 
       })
-
       .catch(err => {
-        navigate('/');
         console.log("fetch error" + err);
-        setHasError(true);
-        setIsVerified(true);
       })
-      */
+      
       
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
+      checkDatos();
       const randomIndex = Math.floor(Math.random() * mockDataMeteorologica.length); // Genera un índice aleatorio
       const selectedData = mockDataMeteorologica[randomIndex]; // Obtiene el objeto correspondiente al índice aleatorio
       setDatos(selectedData);
-      //checkStation();
       setData((prevState) => [
         {
           id: 'LEL',

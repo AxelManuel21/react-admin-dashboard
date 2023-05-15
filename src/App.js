@@ -1,8 +1,9 @@
 import { useState, useEffect  } from "react";
-import { Routes, Route, useLocation  } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "./scenes/dashboard";
 import Alarmas from "./scenes/alarmas";
 import Team from "./scenes/team";
+import Update from "./scenes/update";
 import Form from "./scenes/form";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Inicio from "./scenes/inicio";
@@ -12,13 +13,17 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Auth from "./auth/auth";
 
-
+function PageNotFound() {
+  return (
+    <div>
+      <h2>404 Page not found</h2>
+    </div>
+  );
+}
 
 
 function App() {
   const [theme, colorMode] = useMode();
-  
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
     const checkUserToken = () => {
         const userToken = sessionStorage.getItem('JWT');
@@ -63,8 +68,12 @@ function App() {
                 <Team />
               </ProtectedRoutes>
             } />
-            
 
+            <Route path="/update" element=
+            {<ProtectedRoutes>
+                <Update />
+              </ProtectedRoutes>
+            } />
             
             <Route path="/form" element=
             {<ProtectedRoutes>
@@ -90,6 +99,7 @@ function App() {
               </ProtectedRoutes>
             } />
 
+            <Route path="*" element={<PageNotFound />} />
 
               
             </Routes>
